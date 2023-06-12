@@ -27,22 +27,10 @@ const Label = styled.label`
 export default function Form({ onSubmit, formName, defaultData }) {
   async function handleSubmit(event) {
     event.preventDefault();
+
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    const response = await fetch("/api/places", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (response.ok) {
-      await response.json();
-      places.mutate();
-      event.target.reset();
-    } else {
-      console.error(`Error: ${response.status}`);
-    }
+
     onSubmit(data);
   }
 

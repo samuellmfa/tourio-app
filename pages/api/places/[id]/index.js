@@ -9,12 +9,21 @@ export default async function handler(request, response) {
     return;
   }
 
-  const place = await Place.findById(id);
-  // console.log("Place: ", place);
+  if (request.method === "GET") {
+    const place = await Place.findById(id);
+    // console.log("Place: ", place);
 
-  if (!place) {
-    return response.status(404).json({ status: "Not found" });
+    if (!place) {
+      return response.status(404).json({ status: "Not found" });
+    }
+
+    response.status(200).json(place);
   }
 
-  response.status(200).json(place);
+  if (request.method === "PUT") {
+    const placesUpdate = await Place.findByIdAndUpdate(id, {
+      $set: request.body,
+    });
+    response.status(200).json(placesUpdate);
+  }
 }
