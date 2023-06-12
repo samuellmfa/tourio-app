@@ -34,11 +34,15 @@ export default function DetailsPage() {
   const { id } = router.query;
 
   const { data: place, isLoading, error } = useSWR(`/api/places/${id}`);
-  console.log("Data: ", place);
+  // console.log("Data: ", place);
   if (!isReady || isLoading || error) return <h2>Loading...</h2>;
 
-  function deletePlace() {
-    console.log("deleted?");
+  async function deletePlace() {
+    // console.log("deleted?");
+    await fetch(`/api/places/${id}`, {
+      method: "DELETE",
+    });
+    router.push("/");
   }
 
   return (

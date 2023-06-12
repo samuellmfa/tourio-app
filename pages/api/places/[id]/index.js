@@ -21,9 +21,13 @@ export default async function handler(request, response) {
   }
 
   if (request.method === "PUT") {
-    const placesUpdate = await Place.findByIdAndUpdate(id, {
+    const placeUpdate = await Place.findByIdAndUpdate(id, {
       $set: request.body,
     });
-    response.status(200).json(placesUpdate);
+    response.status(200).json(placeUpdate);
+  }
+  if (request.method === "DELETE") {
+    const placeDelete = await Place.findByIdAndDelete(id);
+    response.status(200).json(placeDelete);
   }
 }
